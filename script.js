@@ -4,6 +4,7 @@ const inputNum = document.querySelector('#number');
 const btn = document.querySelector('#btn');
 
 let lives = 3;
+let gameOver = false;
 let message = document.querySelector('#text');
 
 document.querySelector('#min').textContent = min;
@@ -14,20 +15,37 @@ const showMes = (text, style) => {
         message.classList.add(style);
 }
 
-btn.addEventListener('click', () =>{
-    if(inputNum.value == ''){
-        showMes('You typed empty value', 'danger');
-    } else if (inputNum.value < min || inputNum.value > max) {
-        showMes(`Input a number between ${min} and ${max}`, 'danger')
-    } else if (inputNum.value == randomNum){
-        inputNum.disabled = true;
-        btn.textContent = 'Play again';
-        showMes(`You win! The winning number is ${randomNum}`, 'success')
-    } else if (lives != 0){
-        lives--
-        showMes(`${inputNum.value} is not correct! You have ${lives} guesses left`, 'danger')
-    } else if (lives == 0){
-    });
+const playAgain = (clazz) => {
+    inputNum.disabled = true;
+    btn.textContent = 'Play again';
+    inputNum.classList.add(clazz);
+    btn.classList.add(clazz);
+}
 
-message.className += 'danger';
+btn.addEventListener('click', () => {
+    if(!gameOver){
+        if(inputNum.value == ''){
+            showMes('You typed empty value', 'danger');
+        } else if (inputNum.value < min || inputNum.value > max) {
+            showMes(`Input a number between ${min} and ${max}`, 'danger')
+        } else if (inputNum.value == randomNum){
+            playAgain();
+            showMes(`You win! The winning number is ${randomNum}`, 'success');
+            gameOver = true
+        } else if (lives > 1){
+            lives--
+            showMes(`${inputNum.value} is not correct! You have ${lives} guesses left`, 'danger')
+        } else if (lives == 1){
+            lives--;
+            playAgain();
+            console.log(lives);
+            showMes(`You lose. The correct answer was ${randomNum}`, 'danger');
+            gameOver = true;
+        }
+    } else{
+        window.location.reload();
+    }
+});
+
+// message.className += 'danger';
 //Input a number between ${min} and ${max}

@@ -32,9 +32,14 @@
             color: red;
         }
         .success{
-            color: green    ;
+            color: green;
         }
-
+        .win{
+            border: 1px solid green;
+        }
+        .lose{
+            border: 1px solid red;
+        }
     </style>
     <script async src="script.js"></script>
 </head>
@@ -43,7 +48,7 @@
         <h1>Number Guesser</h1>
         <p>Guess a number between <span id="min">1</span> and <span id="max">10</span> </p>
         <div class="wrap">
-            <input id="number" type="number" placeholder="Enter you guess">
+            <input class="win" id="number" type="number" placeholder="Enter you guess">
             <button id="btn">SUBMIT</button>
             <p id="text"></p>
         </div>
